@@ -22,50 +22,44 @@ Board.prototype.drawAllDie = function(cup) {
      $(die).text(cup[k].value);
   });
 };
-Board.prototype.setEventListenerForAdd = function (game) {
-  this.view.on('click', 'button.add', function() {
-    game.addDieToCup();
-  });
-}
-Board.prototype.setEventListenerForRoll = function (game) {
-  this.view.on('click', 'button.roll', function() {
-    game.rollAllDie();
-  });
-}
 
 //Game
-function Game(view, numSides) {
+function Game(view) {
   this.cup = [];
   this.board = new Board(view);
-  this.numSides = numSides;
   // this.view = view;
 }
 
-Game.prototype.start = function() {
-  this.board.setEventListenerForAdd(this);
-  this.board.setEventListenerForRoll(this);
+Game.prototype.start = function(numSides) {
+  var self = this;
+  this.board.setEventListenerForAdd
+  this.view.on('click', 'button.add', function() {
+    self.addDieToCup(numSides);
+  });
+  this.view.on('click', 'button.roll', function() {
+    self.rollAllDie();
+  });
 };
 
-Game.prototype.addDieToCup = function() {
-    var die = new Die(this.numSides);
+Game.prototype.addDieToCup = function(numSides) {
+    var die = new Die(numSides);
     this.cup.push(die);
     this.board.drawDie();
 };
 
 Game.prototype.rollAllDie = function() {
-  var self = this;
   this.cup.forEach(function(die,k) {
-    die.calcValue();
+    die.calcValue;
   });
-  self.board.drawAllDie(this.cup);
+  this.board.drawAllDie(this.cup);
 };
 
 $(document).ready(function() {
 
   numSides = 6;
-  var game = new Game($('#roller'), numSides);
-  game.start();
-  var otherGame = new Game($('#other_roller'), 12);
-  otherGame.start();
+  var game = new Game($('#roller'));
+  game.start(numSides);
+  var otherGame = new Game($('#other_roller'));
+  otherGame.start(12);
 
 });
